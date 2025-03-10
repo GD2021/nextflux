@@ -22,6 +22,10 @@ export const imageGalleryActive = atom(false);
 export const hasMore = atom(true);
 export const currentPage = atom(1);
 export const pageSize = atom(30);
+export const visibleRange = atom({
+  startIndex: 0,
+  endIndex: 0,
+});
 
 // 加载文章列表
 export async function loadArticles(
@@ -71,29 +75,17 @@ export async function loadArticles(
       settingsState.get().sortDirection,
     );
 
-    // 添加订阅源信息
-    const articlesWithFeed = articles.map((article) => {
-      const feed = targetFeeds.find((f) => f.id === article.feedId);
-      return {
-        ...article,
-        feed: {
-          title: feed?.title || "未知来源",
-          site_url: feed?.site_url || "#",
-        },
-      };
-    });
-
     // 计算分页状态
     const isMore = articles.length === pageSize.get();
 
     // 根据是否追加来更新文章列表
     if (append) {
-      filteredArticles.set([...filteredArticles.get(), ...articlesWithFeed]);
+      filteredArticles.set([...filteredArticles.get(), ...articles]);
       hasMore.set(isMore);
       currentPage.set(page);
     }
 
-    return { articles: articlesWithFeed, total, isMore };
+    return { articles: articles, total, isMore };
   } catch (err) {
     console.error("加载文章失败:", err);
     error.set("加载文章失败");

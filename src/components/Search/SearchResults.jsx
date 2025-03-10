@@ -84,7 +84,7 @@ export default function SearchResults({
   if ($searching) {
     return (
       <div className="flex flex-col items-center gap-2 w-full justify-center h-full text-default-400">
-        <CircularProgress />
+        <CircularProgress aria-label="loading" />
       </div>
     );
   }
@@ -115,7 +115,7 @@ export default function SearchResults({
             index === selectedIndex
               ? "bg-default/80"
               : hoverEffect
-                ? "hover:bg-default/70"
+                ? "hover:bg-default/60"
                 : ""
           }`}
           onClick={() => onSelect(item)}
@@ -126,9 +126,7 @@ export default function SearchResults({
             <div className="flex-1 line-clamp-1">{item.title}</div>
           </div>
           <div className="shrink-0 line-clamp-1 text-xs text-default-400 font-mono">
-            {type === "articles"
-              ? formatDate(item.published_at)
-              : item.categoryName}
+            {type === "articles" && formatDate(item.published_at)}
           </div>
         </div>
       )}
