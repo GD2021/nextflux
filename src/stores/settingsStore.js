@@ -17,7 +17,8 @@ const defaultValue = {
   markAsReadOnScroll: false,
   cardImageSize: "large", // none, small, large
   showFavicon: true,
-  showTextPreview: true,
+  titleLines: 2,
+  textPreviewLines: 2,
   showReadingTime: true,
   autoHideToolbar: false,
   syncInterval: "15", // 添加同步间隔设置，默认15分钟
@@ -28,6 +29,7 @@ const defaultValue = {
   reduceMotion: false,
   useNativeVideoPlayer: false,
   interfaceFontSize: "16",
+  showIndicator: true,
 };
 
 export const settingsState = persistentAtom("settings", defaultValue, {

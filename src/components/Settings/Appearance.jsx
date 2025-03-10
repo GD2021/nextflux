@@ -5,6 +5,7 @@ import {
   ItemWrapper,
   SelItem,
   SwitchItem,
+  SliderItem,
 } from "@/components/ui/settingItem.jsx";
 import {
   CandyOff,
@@ -14,8 +15,10 @@ import {
   LayoutList,
   Rss,
   Square,
-  Text,
   MonitorCog,
+  WrapText,
+  LetterText,
+  SquareArrowUp,
 } from "lucide-react";
 import Theme from "./components/Theme";
 import { useTranslation } from "react-i18next";
@@ -27,10 +30,12 @@ export default function Appearance() {
     useGrayIcon,
     cardImageSize,
     showFavicon,
-    showTextPreview,
     showReadingTime,
     reduceMotion,
     interfaceFontSize,
+    textPreviewLines,
+    titleLines,
+    showIndicator,
   } = useStore(settingsState);
   const { t } = useTranslation();
   return (
@@ -81,6 +86,45 @@ export default function Appearance() {
         />
       </ItemWrapper>
       <ItemWrapper title={t("settings.appearance.articleList")}>
+        <SwitchItem
+          label={t("settings.appearance.showIndicator")}
+          icon={
+            <SettingIcon variant="amber">
+              <SquareArrowUp />
+            </SettingIcon>
+          }
+          settingName="showIndicator"
+          settingValue={showIndicator}
+        />
+        <Divider />
+        <SliderItem
+          label={t("settings.appearance.titleLines")}
+          icon={
+            <SettingIcon variant="green">
+              <LetterText />
+            </SettingIcon>
+          }
+          settingName="titleLines"
+          settingValue={titleLines}
+          max={5}
+          min={0}
+          step={1}
+        />
+        <Divider />
+        <SliderItem
+          label={t("settings.appearance.textPreviewLines")}
+          icon={
+            <SettingIcon variant="green">
+              <WrapText />
+            </SettingIcon>
+          }
+          settingName="textPreviewLines"
+          settingValue={textPreviewLines}
+          max={5}
+          min={0}
+          step={1}
+        />
+        <Divider />
         <SelItem
           label={t("settings.appearance.imagePreviews")}
           icon={
@@ -106,17 +150,6 @@ export default function Appearance() {
           }
           settingName="showFavicon"
           settingValue={showFavicon}
-        />
-        <Divider />
-        <SwitchItem
-          label={t("settings.appearance.showTextPreview")}
-          icon={
-            <SettingIcon variant="green">
-              <Text />
-            </SettingIcon>
-          }
-          settingName="showTextPreview"
-          settingValue={showTextPreview}
         />
         <Divider />
         <SwitchItem

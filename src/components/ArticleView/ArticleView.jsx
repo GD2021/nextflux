@@ -13,7 +13,7 @@ import {
 } from "@/stores/articlesStore.js";
 import { Chip, Divider, ScrollShadow } from "@heroui/react";
 import EmptyPlaceholder from "@/components/ArticleList/components/EmptyPlaceholder";
-import { cleanTitle, getFontSizeClass } from "@/lib/utils";
+import { cleanTitle, extractFirstImage, getFontSizeClass } from "@/lib/utils";
 import ArticleImage from "@/components/ArticleView/components/ArticleImage.jsx";
 import parse from "html-react-parser";
 import { settingsState } from "@/stores/settingsStore";
@@ -236,7 +236,12 @@ const ArticleView = () => {
                     </div>
                   </header>
                   <Divider className="my-4" />
-                  {audioEnclosure && <PlayAndPause source={audioEnclosure} />}
+                  {audioEnclosure && (
+                    <PlayAndPause
+                      source={audioEnclosure}
+                      poster={extractFirstImage($activeArticle)}
+                    />
+                  )}
                   <PhotoProvider
                     bannerVisible={true}
                     onVisibleChange={(visible) =>
@@ -245,11 +250,6 @@ const ArticleView = () => {
                     maskOpacity={0.8}
                     loop={false}
                     speed={() => 300}
-                    easing={(type) =>
-                      type !== 2
-                        ? "cubic-bezier(0.34, 1.3, 0.64, 1)"
-                        : "cubic-bezier(0.25, 0.8, 0.25, 1)"
-                    }
                   >
                     <div
                       className={cn(
